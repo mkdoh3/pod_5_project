@@ -10,7 +10,7 @@ class BookingsController < ApplicationController
   end
 
   def create
-    @booking = Booking.create(booking_params)
+    @booking = current_user.bookings.create(booking_params)
     redirect_to booking_path(@booking)
   end
 
@@ -37,6 +37,6 @@ class BookingsController < ApplicationController
   private
 
   def booking_params
-    params.require(:booking).permit(:start_date, :number_of_guests)
+    params.require(:booking).permit(:start_date, :number_of_guests, :property_id, property_attributes: [:address, :city, :state, :max_occupancy])
   end
 end

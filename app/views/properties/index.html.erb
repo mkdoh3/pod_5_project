@@ -1,0 +1,7 @@
+<h1>All Properties</h1>
+<% @properties.each do |property| %>
+    <p>Address: <%=property.address%></p>
+    <p>City: <%=property.city%></p>
+    <p>State: <%=property.state%></p>
+    <p>Max Occupancy: <%=property.max_occupancy%></p>
+<% end %>
