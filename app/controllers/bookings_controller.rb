@@ -10,17 +10,33 @@ class BookingsController < ApplicationController
   end
 
   def create
-    booking = Booking.create(booking_params)
-    redirect_to booking_path(booking)
+    @booking = current_user.bookings.create(booking_params)
+    redirect_to booking_path(@booking)
   end
 
   def show
     @booking = Booking.find_by_id(params[:id])
   end
 
+  def update
+		@booking = Booking.find(params[:id])
+		@booking.update(booking_params)
+		redirect_to booking_path(@booking)
+	end
+
+	def edit
+    @booking = Booking.find(params[:id])
+  end
+  
+  def destroy
+    @booking = Booking.find(params[:id])
+    @booking.destroy
+    redirect_to bookings_path
+  end
+
   private
 
   def booking_params
-    params.require(:booking).permit(:start_date)
+    params.require(:booking).permit(:start_date, :number_of_guests, :property_id, property_attributes: [:address, :city, :state, :max_occupancy])
   end
 end

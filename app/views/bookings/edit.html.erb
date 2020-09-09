@@ -1,0 +1,10 @@
+<h1>Edit Booking</h1>
+<%=form_for @booking do |f|%>
+  <%=f.label :start_date%>
+  <%=f.date_field :start_date%>
+  <%=f.label :number_of_guests%>
+  <%=f.text_field :number_of_guests%>
+  <%=f.label :property_id%>
+  <%= f.collection_select :property_id, Property.all, :id, :full_address %>
+  <%=f.submit%>
+<%end%>
