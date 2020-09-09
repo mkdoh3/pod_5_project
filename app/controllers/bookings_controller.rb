@@ -5,13 +5,6 @@ class BookingsController < ApplicationController
     @bookings = Booking.all
   end
 
-  #
-  #
-  #
-  # test 123
-  #
-  #
-  #
   def new
     @booking = Booking.new
   end
