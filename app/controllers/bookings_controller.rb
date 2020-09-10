@@ -2,10 +2,16 @@
 
 class BookingsController < ApplicationController
   def index
-    @bookings = Booking.all
+    if params[:property_id]
+      @property = Property.find_by_id(params[:property_id])
+      @bookings = @property.bookings
+    else
+      @bookings = Booking.all
+    end
   end
 
   def new
+    @property = Property.find_by_id(params[:property_id]) if params[:property_id]
     @booking = Booking.new
   end
 
@@ -19,15 +25,15 @@ class BookingsController < ApplicationController
   end
 
   def update
-		@booking = Booking.find(params[:id])
-		@booking.update(booking_params)
-		redirect_to booking_path(@booking)
-	end
+    @booking = Booking.find(params[:id])
+    @booking.update(booking_params)
+    redirect_to booking_path(@booking)
+  end
 
-	def edit
+  def edit
     @booking = Booking.find(params[:id])
   end
-  
+
   def destroy
     @booking = Booking.find(params[:id])
     @booking.destroy
@@ -37,6 +43,6 @@ class BookingsController < ApplicationController
   private
 
   def booking_params
-    params.require(:booking).permit(:start_date, :number_of_guests, :property_id, property_attributes: [:address, :city, :state, :max_occupancy])
+    params.require(:booking).permit(:start_date, :number_of_guests, :property_id, property_attributes: %i[address city state max_occupancy])
   end
 end

@@ -1,7 +1,5 @@
 <h1>All Properties</h1>
 <% @properties.each do |property| %>
-    <p>Address: <%=property.address%></p>
-    <p>City: <%=property.city%></p>
-    <p>State: <%=property.state%></p>
-    <p>Max Occupancy: <%=property.max_occupancy%></p>
+  <p>Address: <%=property.full_address%></p>
+  <%=link_to "property details", property_path(property)%>
 <% end %>

@@ -1,22 +1,27 @@
 <h1>New Booking</h1>
 <%=form_for @booking do |f|%>
+  <%if @property%>
+    <h2>New Booking for <%=@property.full_address%></h2>
+    <%=f.hidden_field :property_id, value:@property.id%>
+  <%else%>
+    <h3>Select a Property</h3>
+    <%=f.label :property_id%>
+    <%= f.collection_select :property_id, Property.all, :id, :full_address, include_blank: true %>
+    <h3>Or Create a New Property</h3>
+    <%= f.fields_for :property, Property.new do |property_field|%>
+      <%= property_field.label :address%>
+      <%= property_field.text_field :address%>
+      <%= property_field.label :city%>
+      <%= property_field.text_field :city%>
+      <%= property_field.label :state%>
+      <%= property_field.text_field :state%>
+      <%= property_field.label :max_occupancy%>
+      <%= property_field.number_field :max_occupancy%>
+    <% end %>
+  <%end%>
   <%=f.label :start_date%>
   <%=f.date_field :start_date%>
   <%=f.label :number_of_guests%>
   <%=f.text_field :number_of_guests%>
-  <h3>Select a Property</h3>
-  <%=f.label :property_id%>
-  <%= f.collection_select :property_id, Property.all, :id, :full_address, include_blank: true %>
-  <h3>Or Create a New Property</h3>
-  <%= f.fields_for :property, Property.new do |property_field|%>
-    <%= property_field.label :address%>
-    <%= property_field.text_field :address%>
-    <%= property_field.label :city%>
-    <%= property_field.text_field :city%>
-    <%= property_field.label :state%>
-    <%= property_field.text_field :state%>
-    <%= property_field.label :max_occupancy%>
-    <%= property_field.number_field :max_occupancy%>
-  <% end %>
   <%=f.submit%>
 <%end%>
